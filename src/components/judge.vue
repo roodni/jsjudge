@@ -1,36 +1,43 @@
 <template>
   <div>
-    <p>制限時間: 2000 msec</p>
-    <div>
-      <code>
-        function (<br>
-        <input type="input" v-model="args"><br>
-        ) {<br>
-        <textarea v-model="code"></textarea><br>
-        }<br>
-        <input type="button" value="判定" @click="judge_code">
-      </code>
-    </div>
-    <table>
-      <tr>
-        <th>ケース名</th>
-        <th>状態</th>
-        <th>エラー</th>
-      </tr>
-      <tr v-for="(item, index) in cases" :key="index">
-        <td>{{ item.name }}</td>
-        <td>
-          <span v-if="item.state === ''" style="color:gray">無</span>
-          <span v-if="item.state === 'R'" style="color:gray">実行中</span>
-          <span v-if="item.state === 'SE'" style="color:red">文法エラー</span>
-          <span v-if="item.state === 'RE'" style="color:red">実行時エラー</span>
-          <span v-if="item.state === 'WA'" style="color:red">誤答</span>
-          <span v-if="item.state === 'AC'" style="color:green">正答</span>
-          <span v-if="item.state === 'TLE'" style="color:red">時間切れ</span>
-        </td>
-        <td>{{ item.err }}</td>
-      </tr>
-    </table>
+    <v-card>
+      <v-card-text>
+        <v-form>
+          function (
+          <v-text-field v-model="args" filled flat dense hide-details />
+          ) {
+          <v-textarea v-model="code" filled flat dense hide-details></v-textarea>
+          }
+          <v-card-actions>
+            <v-btn @click="judge_code">判定</v-btn>
+          </v-card-actions>
+        </v-form>
+      </v-card-text>
+      <v-simple-table>
+        <thead>
+          <tr>
+            <th style="width:30%">ケース名</th>
+            <th style="width:10rem">状態</th>
+            <th>エラー</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in cases" :key="index">
+            <td>{{ item.name }}</td>
+            <td>
+              <span v-if="item.state === ''" style="color:gray">無</span>
+              <span v-if="item.state === 'R'" style="color:gray">実行中</span>
+              <span v-if="item.state === 'SE'" style="color:red">文法エラー</span>
+              <span v-if="item.state === 'RE'" style="color:red">実行時エラー</span>
+              <span v-if="item.state === 'WA'" style="color:red">誤答</span>
+              <span v-if="item.state === 'AC'" style="color:green">正答</span>
+              <span v-if="item.state === 'TLE'" style="color:red">時間切れ</span>
+            </td>
+            <td>{{ item.err }}</td>
+          </tr>
+        </tbody>
+      </v-simple-table>
+    </v-card>
   </div>
 </template>
 
