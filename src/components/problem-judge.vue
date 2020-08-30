@@ -1,6 +1,11 @@
 <template>
   <div>
     <v-card>
+      <v-card-title>問題</v-card-title>
+      <v-card-text>あいうえお</v-card-text>
+    </v-card>
+    <v-card>
+      <v-card-title>提出</v-card-title>
       <v-card-text>
         <v-form>
           function (
@@ -8,11 +13,14 @@
           ) {
           <v-textarea v-model="code" filled flat dense hide-details></v-textarea>
           }
-          <v-card-actions>
-            <v-btn @click="judge_code">判定</v-btn>
-          </v-card-actions>
         </v-form>
       </v-card-text>
+      <v-card-actions>
+        <v-btn @click="judge_code">判定</v-btn>
+      </v-card-actions>
+    </v-card>
+    <v-card>
+      <v-card-title>結果</v-card-title>
       <v-simple-table>
         <thead>
           <tr>
@@ -22,7 +30,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in cases" :key="index">
+          <tr v-for="item in testcases" :key="item.name">
             <td>{{ item.name }}</td>
             <td>
               <span v-if="item.state === ''" style="color:gray">無</span>
@@ -42,99 +50,52 @@
 </template>
 
 <script>
-import JudgeWorker from 'worker-loader!./judge.worker.js';
+import JudgeWorker from 'worker-loader!./problem-judge-worker.js';
 
 export default {
-  name: 'Judge',
+  name: 'problem-judge',
+  props: {
+    src: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
+      html: '',
       args: '',
-      code: "return () => 110;",
-      cases: [
-        {
-          name: '1回',
-          state: '',
-          err: '',
-          judge(f, ac, wa) {
-            const g = f();
-            if (!(g instanceof Function)) {
-              wa();
-              return;
-            }
-            let a = 0, b = 1;
-            for (let i = 0; i < 100; i++) {
-              if (a + b !== g()) {
-                wa();
-                return;
-              }
-              [a, b] = [b, a + b];
-            }
-            ac();
-          }
-        },
-        {
-          name: '2回同時',
-          state: '',
-          err: '',
-          judge(f, ac, wa) {
-            const g = [f(), f()];
-            if (!(g[0] instanceof Function && g[1] instanceof Function)) {
-              wa();
-              return;
-            }
-            const a = [0, 0];
-            const b = [1, 1];
-            for (let i = 0; i < 100; i++) {
-              for (let j = 0; j < 2; j++) {
-                if (a[j] + b[j] !== g[j]()) {
-                  wa();
-                  return;
-                }
-                [a[j], b[j]] = [b[j], a[j] + b[j]];
-              }
-            }
-            ac();
-          }
-        },
-        {
-          name: '100回反復',
-          state: '',
-          err: '',
-          judge(f, ac, wa) {
-            for (let j = 0; j < 100; j++) {
-              const g = f();
-              if (!(g instanceof Function)) {
-                wa();
-                return;
-              }
-              let a = 0, b = 1;
-              for (let i = 0; i < 100; i++) {
-                if (a + b !== g()) {
-                  wa();
-                  return;
-                }
-                [a, b] = [b, a + b];
-              }
-              ac();
-            }
-          }
-        },
-        {
-          name: '1秒後にACになるケース',
-          state: '',
-          err: '',
-          judge(f, ac) {
-            f();
-            setTimeout(() => {ac()}, 1000);
-          }
-        }
-      ]
+      code: '',
+      testcases: []
     };
+  },
+  watch: {
+    src: {
+      immediate: true,
+      handler(src_new) {
+        import(`../assets/problems/${src_new}.js`)
+          .then(module => {
+            const problem = module.default;
+            this.html = problem['html'] ?? 'なんか説明文';
+            this.args = problem['args_default'] ?? '';
+            this.code = problem['code_default'] ?? '';
+            this.testcases = [];
+            for (const testcase of problem.testcases) {
+              this.testcases.push({
+                name: testcase.name,
+                judge: testcase.judge,
+                state: '',
+                err: ''
+              });
+            }
+          });
+      }
+    }
   },
   methods: {
     judge_code() {
-      for (const testcase of this.cases) {
+      for (const testcase of this.testcases) {
         testcase.state = 'R';
+        testcase.err = '';
         const set_state = (state, err) => {
           if (testcase.state !== 'R') {
             return;
@@ -154,11 +115,7 @@ export default {
         }, 2000);
         worker.addEventListener('message', e => {
           const data = e.data;
-          if (typeof data !== 'object' || data === null) {
-            return;
-          }
-          if (data['key'] !== key) {
-            console.warn('不正を試みないでください');
+          if (!(data instanceof Object) || data['key'] !== key) {
             return;
           }
           worker.terminate();
@@ -177,6 +134,7 @@ export default {
           code: this.code,
           judge_code: testcase.judge.toString()
         });
+        // console.log(testcase.judge.toString());
       }
     }
   }
