@@ -1,4 +1,7 @@
+import md from './problem-add.md';
+
 export default {
+  markdown: md,
   args_default: 'a, b',
   testcases: [
     {

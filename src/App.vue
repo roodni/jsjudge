@@ -1,9 +1,6 @@
 <template>
   <v-app>
     <problem-judge src="problem-test" />
-    <v-card>
-      <v-card-text>うんこもりもり森鴎外</v-card-text>
-    </v-card>
   </v-app>
 </template>
 

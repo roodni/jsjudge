@@ -1,4 +1,7 @@
+import md from './problem-test.md';
+
 export default {
+  markdown: md,
   args_default: '',
   code_default:`\
 let a = 0, b = 1;

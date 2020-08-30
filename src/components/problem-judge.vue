@@ -1,18 +1,22 @@
 <template>
   <div>
     <v-card>
-      <v-card-title>問題</v-card-title>
-      <v-card-text>あいうえお</v-card-text>
+      <v-card-title>説明</v-card-title>
+      <v-card-text>
+        <component :is="text"></component>
+      </v-card-text>
     </v-card>
     <v-card>
       <v-card-title>提出</v-card-title>
       <v-card-text>
         <v-form>
-          function (
-          <v-text-field v-model="args" filled flat dense hide-details />
-          ) {
-          <v-textarea v-model="code" filled flat dense hide-details></v-textarea>
-          }
+          <code>
+            function (
+            <v-text-field v-model="args" filled flat dense hide-details></v-text-field>
+            ) {
+            <v-textarea v-model="code" filled flat dense hide-details></v-textarea>
+            }
+          </code>
         </v-form>
       </v-card-text>
       <v-card-actions>
@@ -51,6 +55,7 @@
 
 <script>
 import JudgeWorker from 'worker-loader!./problem-judge-worker.js';
+import 'highlight.js/styles/atom-one-light.css';
 
 export default {
   name: 'problem-judge',
@@ -62,7 +67,7 @@ export default {
   },
   data() {
     return {
-      html: '',
+      text: null,
       args: '',
       code: '',
       testcases: []
@@ -75,7 +80,7 @@ export default {
         import(`../assets/problems/${src_new}.js`)
           .then(module => {
             const problem = module.default;
-            this.html = problem['html'] ?? 'なんか説明文';
+            this.text = problem.markdown.vue.component;
             this.args = problem['args_default'] ?? '';
             this.code = problem['code_default'] ?? '';
             this.testcases = [];

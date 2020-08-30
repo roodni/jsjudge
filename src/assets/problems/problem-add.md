@@ -4,7 +4,7 @@
 <details>
 <summary>実装例</summary>
 
-```
+```js
 function (
   a, b
 ) {
