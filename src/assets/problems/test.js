@@ -1,4 +1,4 @@
-import md from './problem-test.md';
+import md from './test.md';
 
 export default {
   markdown: md,
@@ -76,8 +76,8 @@ return () => {
       name: '1秒後にACになるケース',
       judge: (f, ac) => {
         f();
-        setTimeout(() => {ac()}, 1000);
+        setTimeout(() => {ac();}, 1000);
       }
     }
   ]
-}
+};

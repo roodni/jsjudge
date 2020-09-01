@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card>
-      <v-card-title>説明</v-card-title>
+      <v-card-title>問題</v-card-title>
       <v-card-text>
         <component :is="text"></component>
       </v-card-text>
@@ -92,6 +92,9 @@ export default {
                 err: ''
               });
             }
+          })
+          .catch(() => {
+            this.$router.replace('/404');
           });
       }
     }
@@ -145,6 +148,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-</style>

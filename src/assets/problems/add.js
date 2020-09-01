@@ -1,4 +1,4 @@
-import md from './problem-add.md';
+import md from './add.md';
 
 export default {
   markdown: md,
@@ -29,4 +29,4 @@ export default {
       }
     }
   ]
-}
+};
