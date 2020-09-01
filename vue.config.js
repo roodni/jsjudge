@@ -9,6 +9,7 @@ module.exports = {
   "transpileDependencies": [
     "vuetify"
   ],
+
   configureWebpack: {
     module: {
       rules: [
@@ -37,5 +38,8 @@ module.exports = {
         }
       ]
     }
-  }
+  },
+
+  outputDir: 'docs',
+  publicPath: './'
 };
