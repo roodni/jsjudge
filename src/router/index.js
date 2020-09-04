@@ -10,7 +10,7 @@ const routes = [
     path: '/',
     component: () => import('../components/page-top'),
     meta: {
-      title: 'ようこそ'
+      title: '説明'
     }
   },
   {
@@ -40,7 +40,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const title = to.meta['title'];
-  if (title) {
+  if (title !== undefined) {
     setTitle(title);
   }
   next();

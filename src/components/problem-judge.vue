@@ -191,7 +191,7 @@ export default {
           case 'AC':
             succeeded_num++;
             break;
-          case 'CE':
+          case 'SE':
           case 'RE':
           case 'WA':
           case 'TLE':

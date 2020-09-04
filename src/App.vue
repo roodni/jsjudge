@@ -2,11 +2,11 @@
   <v-app>
     <v-app-bar app flat>
       <v-toolbar-title class="mr-4">
-        桑システム
+        JSJudge
       </v-toolbar-title>
       <v-toolbar-items>
         <v-btn text to="/" exact>
-          トップ
+          説明
         </v-btn>
         <v-btn text to="/problems" exact>
           問題一覧
