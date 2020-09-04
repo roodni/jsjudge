@@ -1,7 +1,22 @@
 <template>
   <div>
+    <v-btn @click="resetProgress">記憶消去ボタン</v-btn>
     <v-card>
-      <v-card-title>{{ name }}</v-card-title>
+      <v-card-title>
+        <span class="mr-4">{{ name }}</span>
+        <v-chip outlined label small class="mr-2">
+          <v-avatar left>
+            <v-icon>mdi-clock-alert</v-icon>
+          </v-avatar>
+          実行時間制限: 2秒
+        </v-chip>
+        <v-chip outlined label small>
+          <v-avatar left>
+            <progress-icon :progress="progress"></progress-icon>
+          </v-avatar>
+          {{ progress_text }}
+        </v-chip>
+      </v-card-title>
       <v-card-text>
         <component :is="text"></component>
       </v-card-text>
@@ -29,7 +44,8 @@
           outlined
           color="primary"
           class="ml-2"
-          @click="judge_code"
+          @click="judgeCode"
+          :disabled="is_running"
         >判定</v-btn>
       </v-card-actions>
     </v-card>
@@ -67,11 +83,16 @@
 <script>
 import JudgeWorker from 'worker-loader!./problem-judge-worker.js';
 import 'highlight.js/styles/atom-one-light.css';
-import problemsIndex from '../assets/problems-index.json';
+import problems_index from '../assets/problems-index.json';
 import setTitle from '../utils/set-title';
+import store_progress from '../stores/problem-progress';
+import ProgressIcon from './progress-icon';
 
 export default {
   name: 'problem-judge',
+  components: {
+    ProgressIcon
+  },
   props: {
     src: {
       type: String,
@@ -84,8 +105,29 @@ export default {
       name: '',
       args: '',
       code: '',
-      testcases: []
+      testcases: [],
+      progress_state: store_progress.state
     };
+  },
+  computed: {
+    is_running() {
+      return this.testcases.some(c => c.state === 'R');
+    },
+    progress() {
+      return store_progress.getProgress(this.src);
+    },
+    progress_text() {
+      switch (this.progress) {
+      case store_progress.values.SOLVED:
+        return '全ケース正解済み';
+      case store_progress.values.PARTIALLY:
+        return '一部ケース正解済み';
+      case store_progress.values.N_A:
+        return '正解していない';
+      default:
+        return 'エラー';
+      }
+    }
   },
   watch: {
     src: {
@@ -94,13 +136,7 @@ export default {
         import(`../assets/problems/${src_new}.js`)
           .then(module => {
             const problem = module.default;
-            this.name = src_new;
-            for (const problem of problemsIndex) {
-              if (problem.src === src_new) {
-                this.name = problem.name;
-                break;
-              }
-            }
+            this.name = problems_index.find(p => p.src === src_new).name ?? src_new;
             setTitle(this.name);
             this.text = problem.markdown.vue.component;
             this.args = problem['args_default'] ?? '';
@@ -122,16 +158,58 @@ export default {
     }
   },
   methods: {
-    judge_code() {
+    resetProgress() {
+      store_progress.setProgress(this.src, store_progress.values.N_A);
+    },
+    judgeCode() {
+      let running_num = 0;
+      let succeeded_num = 0;
+      let failed_num = 0;
       for (const testcase of this.testcases) {
+        running_num++;
         testcase.state = 'R';
         testcase.err = '';
-        const set_state = (state, err) => {
+        const set_result = (state, err) => {
           if (testcase.state !== 'R') {
             return;
           }
           testcase.state = state;
           testcase.err = (err === undefined) ? '' : err;
+          running_num--;
+          switch (state) {
+          case 'AC':
+            succeeded_num++;
+            break;
+          case 'CE':
+          case 'RE':
+          case 'WA':
+          case 'TLE':
+            failed_num++;
+            break;
+          default:
+            console.warn('invalid result', state);
+          }
+          if (running_num === 0) {
+            // 全ケース終了時の判定
+            if (succeeded_num > 0) {
+              if (failed_num === 0) {
+                // 全正解
+                store_progress.setProgress(
+                  this.src,
+                  store_progress.values.SOLVED
+                );
+              } else {
+                // 一部正解
+                const progress = store_progress.getProgress(this.src);
+                if (progress !== store_progress.values.SOLVED) {
+                  store_progress.setProgress(
+                    this.src,
+                    store_progress.values.PARTIALLY
+                  );
+                }
+              }
+            }
+          }
         };
         /**
          * @type Worker
@@ -139,9 +217,8 @@ export default {
         const worker = new JudgeWorker();
         const key = Math.random();
         const timer = setTimeout(() => {
-          set_state('TLE');
           worker.terminate();
-          console.log('TLE');
+          set_result('TLE');
         }, 2000);
         worker.addEventListener('message', e => {
           const data = e.data;
@@ -150,13 +227,13 @@ export default {
           }
           worker.terminate();
           clearTimeout(timer);
-          set_state(data['res'], data['err']);
+          set_result(data['res'], data['err']);
         });
         worker.addEventListener('error', e => {
           e.preventDefault();
           worker.terminate();
           clearTimeout(timer);
-          set_state('RE', e.message);
+          set_result('RE', e.message);
         });
         worker.postMessage({
           key: key,
@@ -170,3 +247,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.v-chip:before {
+  background-color: transparent;
+}
+</style>

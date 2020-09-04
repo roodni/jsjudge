@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app flat>
       <v-toolbar-title class="mr-4">
-        開発中
+        桑システム
       </v-toolbar-title>
       <v-toolbar-items>
         <v-btn text to="/" exact>

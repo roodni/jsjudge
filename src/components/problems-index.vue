@@ -1,25 +1,24 @@
 <template>
-  <v-card>
-    <v-list>
-      <v-list-item
-        v-for="problem in problems"
-        :key="problem.src"
-        :to="`/problems/${problem.src}`"
-      >
-        <v-list-item-title>{{ problem.name }}</v-list-item-title>
-      </v-list-item>
-    </v-list>
-  </v-card>
+  <v-row>
+    <problems-index-item
+      v-for="problem in problems" :key="problem.src"
+      :src="problem.src" :name="problem.name"
+    ></problems-index-item>
+  </v-row>
 </template>
 
 <script>
-import problemsIndexData from '../assets/problems-index.json';
+import problems_index from '../assets/problems-index.json';
+import ProblemsIndexItem from './problems-index-item';
 
 export default {
   name: 'problems-index',
+  components: {
+    ProblemsIndexItem
+  },
   data() {
     return {
-      problems: problemsIndexData
+      problems: problems_index
     };
   }
 };

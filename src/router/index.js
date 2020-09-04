@@ -1,31 +1,28 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import PageTop from '../components/page-top';
-import PageNotFound from '../components/page-not-found';
-import ProblemsIndex from '../components/problems-index';
-import ProblemJudge from '../components/problem-judge';
 import setTitle from '../utils/set-title';
+import PageNotFound from '../components/page-not-found';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    component: PageTop,
+    component: () => import('../components/page-top'),
     meta: {
       title: 'ようこそ'
     }
   },
   {
     path: '/problems',
-    component: ProblemsIndex,
+    component: () => import('../components/problems-index'),
     meta: {
       title: '問題一覧'
     }
   },
   {
     path: '/problems/:src',
-    component: ProblemJudge,
+    component: () => import('../components/problem-judge'),
     props: true
   },
   {

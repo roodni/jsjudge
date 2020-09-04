@@ -1,4 +1,4 @@
-export default function set_title(title) {
+export default function setTitle(title) {
   const app_name = 'JSJudge';
   if (title === '') {
     document.title = app_name;
