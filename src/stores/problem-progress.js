@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-const createKey = problem_src => `problem-${problem_src}`;
+const createKey = problem_src => `jsjudge/problem-${problem_src}`;
 const values = {
   SOLVED: 's',  // すべてのケースが正答になった
   PARTIALLY: 'p', // 1つ以上のケースが正答になった
