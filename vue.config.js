@@ -40,6 +40,6 @@ module.exports = {
     }
   },
 
-  outputDir: 'docs',
+  outputDir: 'dist',
   publicPath: './'
 };
