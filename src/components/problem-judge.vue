@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-btn @click="resetProgress">記憶消去ボタン</v-btn>
     <v-card>
       <v-card-title>
         <span class="mr-4">{{ name }}</span>
@@ -47,6 +46,10 @@
           @click="judgeCode"
           :disabled="is_running"
         >判定</v-btn>
+        <v-btn
+          outlined
+          @click="resetArgsAndCode"
+        >リセット</v-btn>
       </v-card-actions>
     </v-card>
 
@@ -103,7 +106,9 @@ export default {
     return {
       text: null,
       name: '',
+      args_default: '',
       args: '',
+      code_default: '',
       code: '',
       testcases: [],
       progress_state: store_progress.state
@@ -139,8 +144,10 @@ export default {
             this.name = problems_index.find(p => p.src === src_new).name ?? src_new;
             setTitle(this.name);
             this.text = problem.markdown.vue.component;
-            this.args = problem['args_default'] ?? '';
-            this.code = problem['code_default'] ?? '';
+            this.args_default = problem['args_default'] ?? '';
+            this.args = this.args_default;
+            this.code_default = problem['code_default'] ?? '';
+            this.code = this.code_default;
             this.testcases = [];
             for (const testcase of problem.testcases) {
               this.testcases.push({
@@ -158,6 +165,10 @@ export default {
     }
   },
   methods: {
+    resetArgsAndCode() {
+      this.args = this.args_default;
+      this.code = this.code_default;
+    },
     resetProgress() {
       store_progress.setProgress(this.src, store_progress.values.N_A);
     },
