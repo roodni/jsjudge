@@ -24,3 +24,15 @@
     </v-main>
   </v-app>
 </template>
+
+<style lang="scss">
+.frontmatter-markdown {
+  code {
+    color: inherit !important;
+    background-color: transparent !important;
+    font-size: 100% !important;
+    font-weight: bold !important;
+    padding: 0 !important;
+  }
+}
+</style>

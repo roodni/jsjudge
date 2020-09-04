@@ -263,4 +263,11 @@ export default {
 .v-chip:before {
   background-color: transparent;
 }
+code {
+  color: inherit;
+  background-color: transparent;
+  font-size: 100%;
+  font-weight: bold;
+  padding: 0;
+}
 </style>
