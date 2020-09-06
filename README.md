@@ -1,5 +1,7 @@
 # jsjudge
 
+某所[JavaScript講習会](https://roodni.github.io/javascript-lecture/)用の演習システム
+
 ## Project setup
 ```
 npm install
