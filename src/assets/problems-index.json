@@ -10,5 +10,13 @@
   {
     "name": "切り捨て100",
     "src": "floor100"
+  },
+  {
+    "name": "GP計算",
+    "src": "gp"
+  },
+  {
+    "name": "うるう年判定",
+    "src": "leap-year"
   }
 ]
