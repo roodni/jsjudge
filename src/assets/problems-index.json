@@ -16,6 +16,10 @@
     "src": "gp"
   },
   {
+    "name": "文字列を数値に変換",
+    "src": "string2num"
+  },
+  {
     "name": "うるう年判定",
     "src": "leap-year"
   }
