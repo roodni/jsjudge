@@ -27,12 +27,27 @@
 
 <style lang="scss">
 .frontmatter-markdown {
+  pre {
+    code {
+      color: inherit !important;
+      background-color: transparent !important;
+      font-size: 100% !important;
+      font-weight: bold !important;
+      padding: 0 !important;
+    }
+  }
   code {
-    color: inherit !important;
+    color: #383a42 !important;
     background-color: transparent !important;
     font-size: 100% !important;
     font-weight: bold !important;
-    padding: 0 !important;
+    padding: 0px 6px;
+  }
+  p {
+    margin: 8px 0px !important;
+  }
+  ul {
+    margin: 8px 0px;
   }
 }
 </style>
