@@ -30,9 +30,6 @@
   pre {
     code {
       color: inherit !important;
-      background-color: transparent !important;
-      font-size: 100% !important;
-      font-weight: bold !important;
       padding: 0 !important;
     }
   }
@@ -41,7 +38,8 @@
     background-color: transparent !important;
     font-size: 100% !important;
     font-weight: bold !important;
-    padding: 0px 6px;
+    padding: 0px 6px !important;
+    font-family: "Courier", "Courier New", "Courier Prime", monospace;
   }
   p {
     margin: 8px 0px !important;
