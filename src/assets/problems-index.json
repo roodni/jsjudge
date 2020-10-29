@@ -22,5 +22,9 @@
   {
     "name": "うるう年判定",
     "src": "leap-year"
+  },
+  {
+    "name": "曜日判定",
+    "src": "day-of-the-week"
   }
 ]

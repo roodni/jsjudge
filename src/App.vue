@@ -29,17 +29,25 @@
 .frontmatter-markdown {
   pre {
     code {
+      background-color: transparent !important;
       color: inherit !important;
       padding: 0 !important;
     }
   }
   code {
     color: #383a42 !important;
-    background-color: transparent !important;
+    background-color: rgba(27, 31, 35, 0.05) !important;
     font-size: 100% !important;
     font-weight: bold !important;
-    padding: 0px 6px !important;
+    padding: 0 4px !important;
     font-family: "Courier", "Courier New", "Courier Prime", monospace;
+  }
+  table {
+    border-collapse: collapse;
+    td, th {
+      padding: 6px 13px;
+      border: 1px solid #dfe2e5;
+    }
   }
   p {
     margin: 8px 0px !important;
