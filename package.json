@@ -49,7 +49,8 @@
       "no-extra-semi": "error",
       "no-unexpected-multiline": "error",
       "no-unreachable": "error",
-      "no-unused-vars": ["error", { "args": "after-used" }]
+      "no-unused-vars": ["error", { "args": "after-used" }],
+      "eqeqeq": ["error", "always"]
     }
   },
   "browserslist": [
