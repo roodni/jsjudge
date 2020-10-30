@@ -18,7 +18,7 @@ addEventListener('message', e => {
     postMessage({
       key: key,
       res: 'SE',
-      err: e.toString()
+      err: e
     });
     close();
     return;

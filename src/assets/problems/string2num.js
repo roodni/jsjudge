@@ -1,5 +1,7 @@
 import md from './string2num.md';
 
+// 名前空間汚染の対策をしていないが、面倒なので放置
+
 export default {
   markdown: md,
   args_default: 'str',
