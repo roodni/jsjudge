@@ -20,6 +20,21 @@ export default {
       }
     },
     {
+      name: '2008年4月',
+      judge: (f, ac, wa) => {
+        for (let d = 1; d <= 30; d++) {
+          const date = new Date(2008, 3, d);
+          const ans = "日月火水木金土"[date.getDay()];
+          const res = f(2008, 4, d);
+          if (ans !== res) {
+            wa();
+            return;
+          }
+        }
+        ac();
+      }
+    },
+    {
       name: '1600年〜2100年',
       judge: (f, ac, wa) => {
         let d = 1;
