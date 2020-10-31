@@ -1,7 +1,11 @@
 [
   {
-    "name": "テスト用問題",
+    "name": "test",
     "src": "test"
+  },
+  {
+    "name": "test2",
+    "src": "test2"
   },
   {
     "name": "足し算",
