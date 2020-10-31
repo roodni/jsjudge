@@ -39,12 +39,12 @@ export default {
       }
     },
     {
-      name: '1600年〜2100年',
+      name: '1900年〜2100年',
       judge: (f, ac, wa) => {
         Object.freeze(self.Date.prototype);
         const Date = self.Date;
         let d = 1;
-        for (let y = 1600; y <= 2100; y++) {
+        for (let y = 1900; y <= 2100; y++) {
           for (let m = 1; m <= 12; m++) {
             const date = new Date(y, m - 1, d);
             const ans = "日月火水木金土"[date.getDay()];
