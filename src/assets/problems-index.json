@@ -24,7 +24,11 @@
     "src": "leap-year"
   },
   {
-    "name": "曜日判定",
+    "name": "曜日計算",
     "src": "day-of-the-week"
+  },
+  {
+    "name": "素数判定",
+    "src": "prime-number"
   }
 ]
