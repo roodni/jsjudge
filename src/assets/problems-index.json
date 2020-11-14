@@ -38,5 +38,9 @@
   {
     "name": "高階関数",
     "src": "higher-order"
+  },
+  {
+    "name": "関数迷路",
+    "src": "func-maze"
   }
 ]

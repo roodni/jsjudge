@@ -1,7 +1,6 @@
 const postMessage = self.postMessage;
 const close = self.close;
 
-delete self.console;
 delete self.postMessage;
 
 addEventListener('message', e => {
@@ -30,10 +29,11 @@ addEventListener('message', e => {
     });
     close();
   };
-  const reject = () => {
+  const reject = (msg='') => {
     postMessage({
       key: key,
-      res: 'WA'
+      res: 'WA',
+      err: msg
     });
     close();
   };
