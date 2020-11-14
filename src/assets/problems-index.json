@@ -34,5 +34,9 @@
   {
     "name": "素数判定",
     "src": "prime-number"
+  },
+  {
+    "name": "高階関数",
+    "src": "higher-order"
   }
 ]
