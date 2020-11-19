@@ -42,5 +42,9 @@
   {
     "name": "関数迷路",
     "src": "func-maze"
+  },
+  {
+    "name": "未来予知",
+    "src": "predict"
   }
 ]
