@@ -50,7 +50,7 @@ export default {
             const ans = "日月火水木金土"[date.getDay()];
             const res = f(y, m, d);
             if (ans !== res) {
-              wa();
+              wa(`${y}/${m}/${d} の結果が違います`);
               return;
             }
             d = d % 10 + 1;
