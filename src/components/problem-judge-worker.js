@@ -37,6 +37,25 @@ addEventListener('message', e => {
     });
     close();
   };
+  const libs = {
+    is_same_array: (a1, a2) => {
+      try {
+        if (a1.length === a2.length) {
+          for (let i = 0; i < a1.length; i++) {
+            const v1 = a1[i];
+            const v2 = a2[i];
+            if (v1 !== v2) {
+              return false;
+            }
+          }
+          return true;
+        }
+        return false;
+      } catch (e) {
+        return false;
+      }
+    }
+  };
   const judge_func = new Function('...args', `(${judge_code})(...args);`);
-  judge_func(submited_func, accept, reject);
+  judge_func(submited_func, accept, reject, libs);
 });

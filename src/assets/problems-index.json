@@ -46,5 +46,13 @@
   {
     "name": "未来予知",
     "src": "predict"
+  },
+  {
+    "name": "科目の抽出",
+    "src": "filter"
+  },
+  {
+    "name": "科目の並び替え",
+    "src": "sort"
   }
 ]
