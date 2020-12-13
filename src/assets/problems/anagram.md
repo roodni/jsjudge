@@ -7,3 +7,7 @@
 f("Dormitory", "Dirty Room")  // true
 f("kuwa", "numa") // false
 ```
+
+大文字と小文字の変換には
+[String.prototype.toLowerCase() - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase)
+が役に立つかもしれません。
