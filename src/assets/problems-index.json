@@ -48,11 +48,19 @@
     "src": "predict"
   },
   {
+    "name": "可変長引数",
+    "src": "sum-of-args"
+  },
+  {
     "name": "科目の抽出",
     "src": "filter"
   },
   {
     "name": "科目の並び替え",
     "src": "sort"
+  },
+  {
+    "name": "アナグラム",
+    "src": "anagram"
   }
 ]
