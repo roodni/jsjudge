@@ -6,7 +6,7 @@
 
 `f1`の定義として、例えば次のようなものが考えられます。なお`setTimeout`の書き換えは対策済みなので、
 <router-link to="./predict">未来予知</router-link>
-の解法は通用しません。
+のようなズルはできません。
 ```js
 const setTimeout = self.setTimeout; // 書き換え対策
 function f1(g) {
