@@ -2,6 +2,7 @@ const postMessage = self.postMessage;
 const close = self.close;
 
 delete self.postMessage;
+delete self.console;
 
 addEventListener('message', e => {
   const data = e.data;
