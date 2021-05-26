@@ -1,6 +1,6 @@
 # jsjudge
 
-某所[JavaScript講習会](https://roodni.github.io/javascript-lecture/)用の演習システム
+某所JavaScript講習会用の演習システム
 
 ## Project setup
 ```
